@@ -110,15 +110,14 @@ func findLinks(source string) (links []linkStruct){
 
 func fetchUrlAndParseTitle(url string, ch chan linkStruct, chFinished chan bool) {
     
-    title := ""
-    response, err := http.Get(url)
-    
     defer func() {
         // Notify that we're done after this function
         chFinished <- true
     }()
+ 
+    title := ""
     
-    
+    response, err := http.Get(url)
     if err != nil {
         log.Println("ERROR: Failed to fetch \"" + url + "\"")
         //return
