@@ -21,6 +21,7 @@ var tests = []testPair{
     
     {   "@bob @john (success) such a cool feature; \nhttps://twitter.com/jdorfman/status/430511497475670016",
         `{"mentions":["bob","john"],"emoticons":["success"],"links":[{"url":"https://twitter.com/jdorfman/status/430511497475670016","title":"Justin Dorfman on Twitter: \"nice @littlebigdetail from @HipChat (shows hex colors when pasted in chat). http://t.co/7cI6Gjy5pq\""}]}` },
+    { "Mentions: @bob fail@bob word @bob  @ bob  Emoticons  (emoticon) (emoticonlongerthanthemaxlimit) (nested (emo)) (nonclosed", `{"mentions":["bob","bob","bob"],"emoticons":["emoticon","emo"]}` },
 }
 
 func TestParseInput(t *testing.T) {
