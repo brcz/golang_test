@@ -10,6 +10,7 @@ import (
         "errors"
         "log"
         "flag"
+		  "time"
 )
 
 // source string with message to be parsed
@@ -78,7 +79,7 @@ func ParseInput(source string) (result string, err error) {
 * function to find mentions in a string.
 *
 * input: message string
-* output: slice of strings with finded mentions without @ sign
+* output: slice of strings with found mentions without @ sign
 *
 */
 func findMentions(source string) (mentions []string){
@@ -89,10 +90,10 @@ func findMentions(source string) (mentions []string){
 }
 
 /***
-* function to find mentions in a string.
+* function to find emoticons in a string.
 *
 * input: message string
-* output: slice of strings with finded emoticons without framing parenthesis
+* output: slice of strings with found emoticons without framing parenthesis
 *
 */
 func findEmoticons(source string) (emoticons []string){
@@ -177,8 +178,11 @@ func fetchUrlAndParseTitle(url string, ch chan linkStruct, chFinished chan chann
     }()
 
     title := ""
-
-    response, err := http.Get(url)
+	//fmt.Println("url=" ,url)
+		var netClient = &http.Client{
+			Timeout: time.Second * 10,
+			}
+    response, err :=netClient.Get(url)
     if err != nil {
         log.Println("ERROR: Failed to fetch \"" + url + "\"")
         //return
@@ -236,4 +240,3 @@ func traverse(n *html.Node) (string, error) {
 
     return "", errors.New("false")
 }
-
